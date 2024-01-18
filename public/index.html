@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex justify-center">
+        <div class="p-10">
+            <h1 class="text-blue-500 text-3xl text-center">Currency <span class="text-orange-500">Converter</span></h1>
+            <div class="bg-orange-500 w-9 h-1 rounded-full"></div>
+        </div>
+    </div>
+    <div class="flex justify-center">
+        <form id="currencyForm">
+            <div>
+                <div>
+                    <div class="flex justify-center">
+                        <label for="amount" class="text-blue-500">Amount</label>
+                    </div>
+                    <br>
+                    <div class="flex justify-center">
+                        <input type="number" id="amount" name="amount" required class="text-blue-500 border border-orange-500 rounded-full px-2">
+                    </div>
+                </div>
+                <br>
+                <div class="flex justify-center gap-2">
+                    <label for="from" class="text-orange-500">From <span class="text-blue-500">Currency :</span></label>
+                    <select id="from" name="from" required class="border rounded-full border-orange-500 pl-2 bg-white">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                        <option value="THB">THB</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="flex justify-center gap-2">
+                <label for="to" class="text-blue-500">To <span class="text-orange-500">Currency :</span></label>
+                <select id="to" name="to" required class="border rounded-full border-orange-500 pl-2 bg-white">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="JPY">JPY</option>
+                    <option value="THB">THB</option>
+                    <!-- เพิ่มตัวเลือกสกุลเงินต่าง ๆ ที่ต้องการให้แปลง -->
+                </select>
+            </div>
+
+            <div class="flex justify-center pt-5">
+                <div id="result" class="text-blue-500"></div>
+            </div>
+    
+            <div class="flex justify-center p-10">
+                <button type="button" onclick="convertCurrency()" class="transition hover:shadow-sm bg-orange-200 text-orange-500 px-5 py-1 rounded-full">Convert</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        async function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+
+            const response = await fetch(`/convert?amount=${amount}&from=${from}&to=${to}`);
+            const data = await response.json();
+
+            document.getElementById('result').innerText = `Result: ${data.result}`;
+        }
+    </script>
+</body>
+</html>
